@@ -11,5 +11,8 @@
         <property name="current_session_context_class">thread</property>
  
         <mapping class="controller.Eventos" />
+        <mapping class="controller.Descripciones" />
+        <mapping class="controller.Marcas" />
+        
     </session-factory>
 </hibernate-configuration>
