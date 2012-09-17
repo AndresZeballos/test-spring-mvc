@@ -22,8 +22,8 @@ public class PepeController extends SimpleFormController {
 
         setCommandClass(Descripciones.class);
         setCommandName("descripcion");
-        setSuccessView("holaView");
-        setFormView("descripcionView");
+        setSuccessView("descripcionView");
+        setFormView("holaView");
     }
 
     @Override
