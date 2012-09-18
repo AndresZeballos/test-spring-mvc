@@ -4,27 +4,36 @@
     Author     : Andres
 --%>
 
-<%
-	// Obtener el parametro con el nombre de la persona
-	String persona = request.getParameter("persona");
+<%@page import="controller.UtilAndres"%>
+<%@page import="org.hibernate.HibernateException"%>
+<%@page import="controller.Descripciones"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="org.hibernate.SessionFactory"%>
+<%@page import="controller.UtilAndres"%>
 
-	// Devolver el lugar de residencia de la persona
-	if( persona.equalsIgnoreCase("Jesus Hernandez") )
-	{
-		out.print("GUADALAJARA");
-	}
-	else
-	if( persona.equalsIgnoreCase("Fulano de tal") )
-	{
-		out.print("PINTO");
-	}
-	else
-	if( persona.equalsIgnoreCase("Fulano de cual") )
-	{
-		out.print("VALDEMORO");
-	}
-	else
-	{
-		out.print("PERSONA DESCONOCIDA");
-	}
+<%
+    // Obtener el parametro con el nombre de la persona
+    String persona = request.getParameter("persona");
+
+    SessionFactory sf = UtilAndres.getSessionFactory();
+    Session s = sf.getCurrentSession();
+    s.beginTransaction();
+    Descripciones e = null;
+    try {
+        //e = (Descripciones) s..get(Descripciones.class);
+        e = (Descripciones) s.get(Descripciones.class, persona);
+    } catch (HibernateException he) {
+    }
+    out.print(e.getCodigo() + ";" + e.getCategoria() + ";" + e.getDescripcion());
+    // Devolver el lugar de residencia de la persona
+    /*
+     if (persona.equalsIgnoreCase("Mariana")) {
+     out.print("Vamos nomás!!!");
+     } else if (persona.equalsIgnoreCase("Santiago")) {
+     out.print("Super gordo!!!");
+     } else if (persona.equalsIgnoreCase("Andres")) {
+     out.print("Gracias a dios!!!!");
+     } else {
+     out.print("PERSONA DESCONOCIDA");
+     }*/
 %>

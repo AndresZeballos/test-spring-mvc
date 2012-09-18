@@ -4,44 +4,19 @@
     Author     : Andres
 --%>
 
-
-
-
-
 <script>
-    var ajax;
-
-    function funcionCallback()
-    {
-        document.all.salida.innerHTML = "<b>PEPE</b>";	
-        if( ajax.readyState == 4 )
-        {
-            if( ajax.status == 200 )
-            {
-                // Escribimos el resultado en la pagina HTML mediante DHTML
-                document.all.salida.innerHTML = "<b>"+ajax.responseText+"</b>";	
+    function preguntar(){
+        $.ajax({
+            url: "newjsp.htm",
+            data: {
+                persona: $("#codigo").val()
+            },
+            success: function(data){
+                $("#salida").html(data);
             }
-        }
-    }
-
-    function recuperaResidencia()
-    {
-        // Creamos el control XMLHttpRequest segun el navegador en el que estemos 
-        if( window.XMLHttpRequest )
-            ajax = new XMLHttpRequest(); // No Internet Explorer
-        else
-            ajax = new ActiveXObject("Microsoft.XMLHTTP"); // Internet Explorer
-
-        // Almacenamos en el control al funcion que se invocara cuando la peticion
-        // cambie de estado	
-        ajax.onreadystatechange = funcionCallback;
-
-        // Enviamos la peticion
-        ajax.open( "GET", "\\WEB-INF\\jspnewjsp.jsp?persona="+document.all.codigo.value, true );
-        ajax.send( "" );
+        });
     }
 </script>
-
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
@@ -56,6 +31,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/WA1/scripts/jquery-1.8.1.js"></script>
         <title>HolaView</title>
     </head>
     <body onload="">
@@ -88,8 +64,10 @@
                     <%                            }
                     %>  
                 </select>
-                <input type="button" value="OK" onclick="recuperaResidencia()">
+                <input type="button" value="OK" onclick="preguntar()">
             </form>
+
+
         </spring:nestedPath>
         <span id="salida"></span>
     </body>
