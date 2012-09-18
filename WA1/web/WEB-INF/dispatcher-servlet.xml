@@ -23,6 +23,7 @@
             <props>
                 <prop key="index.htm">indexController</prop>
                 <prop key="newjsp.htm">index2Controller</prop>
+                <prop key="descripcionView.htm">index3Controller</prop>
                 
             </props>
         </property>
@@ -43,6 +44,11 @@
     <bean name="index2Controller"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="newjsp" />
+        
+    <bean name="index3Controller"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="descripcionView" />
     
+
     
 </beans>

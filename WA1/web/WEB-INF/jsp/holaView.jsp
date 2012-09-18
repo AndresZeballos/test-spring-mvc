@@ -4,7 +4,7 @@
     Author     : Andres
 --%>
 
-<script>
+<script type="text/javascript">
     function preguntar(){
         $.ajax({
             url: "newjsp.htm",
@@ -12,9 +12,55 @@
                 persona: $("#codigo").val()
             },
             success: function(data){
-                $("#salida").html(data);
+                var json = eval('(' + data + ')');
+                $("#salida").html(
+                "<table border='1' cellspacing='3' cellpadding='3' width='800'><tr>"+
+                    "<th scope='col'>Codigo</th>"+
+                    "<th scope='col'>Categoria</th>"+
+                    "<th scope='col'>Descripcion</th>"+
+                    "</tr><tr>" +
+                    "<td id='cod'>"+json.codigo+"</td>"+
+                    "<td id='cat'>"+json.categoria+"</td>"+
+                    "<td id='des'>"+json.descripcion+"</td>"+
+                    "<td id='edit' width='1'><input type='button' value='Editar' onClick='editar()'></td>"+
+                    "</tr></table>");
             }
         });
+    }
+    
+    
+    function actualizar(){
+        fila = {
+            "codigo": document.getElementById('cod_edicion').value,
+            "categoria": document.getElementById('cat_edicion').value,
+            "descripcion": document.getElementById('des_edicion').value
+        }
+        document.getElementById('cod').innerHTML = fila.codigo;
+        document.getElementById('cat').innerHTML = fila.categoria;
+        document.getElementById('des').innerHTML = fila.descripcion;
+        document.getElementById('edit').innerHTML = "<input type='button' value='Editar' onClick='editar()'>";
+        $.ajax({
+            url: "descripcionView.htm",
+            data: fila,
+            success: function(data){
+                data = eval('(' + data + ')');
+                if(data.ok == 'OK'){
+                    $("#ok").html("Actualización completa");
+                }
+            }
+        });
+    }
+    
+    function editar(){
+        fila = {
+            "codigo": document.getElementById('cod').innerHTML,
+            "categoria": document.getElementById('cat').innerHTML,
+            "descripcion": document.getElementById('des').innerHTML
+        }
+        document.getElementById('cod').innerHTML = "<textarea id='cod_edicion' rows='1' cols='25'>"+fila.codigo+"</textarea>";
+        document.getElementById('cat').innerHTML = "<textarea id='cat_edicion' rows='1' cols='25'>"+fila.categoria+"</textarea>";
+        document.getElementById('des').innerHTML = "<textarea id='des_edicion' rows='1' cols='25'>"+fila.descripcion+"</textarea>";
+        document.getElementById('edit').innerHTML = "<input type='button' value='Actualizar' onClick='actualizar()'>";
     }
 </script>
 
@@ -33,6 +79,11 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="/WA1/scripts/jquery-1.8.1.js"></script>
         <title>HolaView</title>
+        <style>
+            textarea {
+                resize: none;
+            }
+        </style>
     </head>
     <body onload="">
         <h1>Hola!</h1>
@@ -69,6 +120,7 @@
 
 
         </spring:nestedPath>
-        <span id="salida"></span>
+        <div id="salida"></div>
+        <div id="ok"></div>
     </body>
 </html>

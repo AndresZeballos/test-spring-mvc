@@ -20,20 +20,12 @@
     s.beginTransaction();
     Descripciones e = null;
     try {
-        //e = (Descripciones) s..get(Descripciones.class);
         e = (Descripciones) s.get(Descripciones.class, persona);
     } catch (HibernateException he) {
     }
-    out.print(e.getCodigo() + ";" + e.getCategoria() + ";" + e.getDescripcion());
-    // Devolver el lugar de residencia de la persona
-    /*
-     if (persona.equalsIgnoreCase("Mariana")) {
-     out.print("Vamos nomás!!!");
-     } else if (persona.equalsIgnoreCase("Santiago")) {
-     out.print("Super gordo!!!");
-     } else if (persona.equalsIgnoreCase("Andres")) {
-     out.print("Gracias a dios!!!!");
-     } else {
-     out.print("PERSONA DESCONOCIDA");
-     }*/
 %>
+    {
+        "codigo": "<%=e.getCodigo()%>",
+        "categoria": "<%=e.getCategoria()%>",
+        "descripcion": "<%=e.getDescripcion()%>"
+    }
