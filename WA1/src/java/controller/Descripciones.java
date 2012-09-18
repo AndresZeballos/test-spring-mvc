@@ -38,16 +38,14 @@ public class Descripciones implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "codigo")
     private String codigo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "categoria")
     private String categoria;
     @Size(max = 500)
     @Column(name = "descripcion")
     private String descripcion;
     @JoinColumn(name = "marca", referencedColumnName = "marca")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Marcas marca;
 
     public Descripciones() {
@@ -55,11 +53,6 @@ public class Descripciones implements Serializable {
 
     public Descripciones(String codigo) {
         this.codigo = codigo;
-    }
-
-    public Descripciones(String codigo, String categoria) {
-        this.codigo = codigo;
-        this.categoria = categoria;
     }
 
     public String getCodigo() {
