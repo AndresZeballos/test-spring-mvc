@@ -4,6 +4,7 @@
     Author     : Andres
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="controller.UtilAndres"%>
 <%@page import="org.hibernate.HibernateException"%>
 <%@page import="controller.Descripciones"%>
@@ -21,6 +22,15 @@
     Descripciones e = null;
     try {
         e = (Descripciones) s.get(Descripciones.class, persona);
+        s.flush();
+        s.getTransaction().commit();
+        s = sf.getCurrentSession();
+        s.beginTransaction();
+        List<Descripciones> foo = s.getNamedQuery("Descripciones.findAll").list();
+        for(Descripciones bar : foo){
+            System.out.println(bar.getCodigo() + ";" + bar.getCategoria() + ";" + bar.getDescripcion());
+        }
+        s.getTransaction().commit();
     } catch (HibernateException he) {
     }
 %>

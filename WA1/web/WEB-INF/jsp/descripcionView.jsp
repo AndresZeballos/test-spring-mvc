@@ -4,6 +4,7 @@
     Author     : Andres
 --%>
 
+<%@page import="java.util.List"%>
 <%@page import="controller.UtilAndres"%>
 <%@page import="org.hibernate.HibernateException"%>
 <%@page import="controller.Descripciones"%>
@@ -18,18 +19,24 @@
     String descripcion = request.getParameter("descripcion");
 
 
-    System.out.println(codigo + ";" + categoria + ";" + descripcion);
+    System.out.println(codigo + ";" + categoria + ";" + descripcion + "\n");
     SessionFactory sf = UtilAndres.getSessionFactory();
     Session s = sf.getCurrentSession();
     s.beginTransaction();
     Descripciones e = null;
     try {
         e = (Descripciones) s.get(Descripciones.class, codigo);
-        System.out.println(e.getCodigo() + ";" + e.getCategoria() + ";" + e.getDescripcion());
         e.setCategoria(categoria);
         e.setDescripcion(descripcion);
         s.update(e);
         s.flush();
+        s.getTransaction().commit();
+        s = sf.getCurrentSession();
+        s.beginTransaction();
+        List<Descripciones> foo = s.getNamedQuery("Descripciones.findAll").list();
+        for(Descripciones bar : foo){
+            System.out.println(bar.getCodigo() + ";" + bar.getCategoria() + ";" + bar.getDescripcion());
+        }
         s.getTransaction().commit();
         
 %>
@@ -38,6 +45,11 @@
 }
 <%
     } catch (HibernateException he) {
+        he.printStackTrace();
+%>
+{
+    "ok": "No"
+}
+<%
     }
-
 %>

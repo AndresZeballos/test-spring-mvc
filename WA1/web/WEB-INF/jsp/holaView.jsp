@@ -6,6 +6,7 @@
 
 <script type="text/javascript">
     function preguntar(){
+        $("#ok").html("");
         $.ajax({
             url: "newjsp.htm",
             data: {
@@ -30,6 +31,7 @@
     
     
     function actualizar(){
+        $("#ok").html("");
         fila = {
             "codigo": document.getElementById('cod_edicion').value,
             "categoria": document.getElementById('cat_edicion').value,
@@ -46,6 +48,8 @@
                 data = eval('(' + data + ')');
                 if(data.ok == 'OK'){
                     $("#ok").html("Actualización completa");
+                } else {
+                    $("#ok").html("No ok");
                 }
             }
         });
@@ -61,6 +65,7 @@
         document.getElementById('cat').innerHTML = "<textarea id='cat_edicion' rows='1' cols='25'>"+fila.categoria+"</textarea>";
         document.getElementById('des').innerHTML = "<textarea id='des_edicion' rows='1' cols='25'>"+fila.descripcion+"</textarea>";
         document.getElementById('edit').innerHTML = "<input type='button' value='Actualizar' onClick='actualizar()'>";
+        $("#ok").html("");
     }
 </script>
 
