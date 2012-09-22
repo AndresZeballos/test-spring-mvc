@@ -24,6 +24,8 @@
                 <prop key="index.htm">indexController</prop>
                 <prop key="newjsp.htm">index2Controller</prop>
                 <prop key="descripcionView.htm">index3Controller</prop>
+                <prop key="response.htm">index4Controller</prop>
+                <prop key="descripciones.htm">index5Controller</prop>
                 
             </props>
         </property>
@@ -48,6 +50,14 @@
     <bean name="index3Controller"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="descripcionView" />
+    
+    <bean name="index4Controller"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="response" />
+    
+    <bean name="index5Controller"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="descripciones" />
     
 
     
